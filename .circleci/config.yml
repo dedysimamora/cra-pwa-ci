@@ -1,28 +1,3 @@
-# version: 2.0
-# jobs:
-#   build:
-#     docker:
-#       - image: node:14.18.0-alpine
-#     steps:
-#       - checkout
-#       - run: |
-
-#       - run: |
-#           # build client
-#           npm install && npm run build
-#           # TODO: add options for dev and prod
-#           # deploy client
-#           npm install -g firebase-tools && firebase deploy --only hosting --token ${FIREBASE_TOKEN}
-# workflows:
-#   version: 2
-#   build-and-deploy:
-#     jobs:
-#       - build:
-#           filters:
-#             branches:
-#               only:
-#                 - master
-
 version: 2.1
 orbs: 
   jq: circleci/jq@2.2.0
@@ -32,7 +7,6 @@ jobs:
       - image: node:14.18.0-alpine
     steps:
       - checkout
-      - jq/install
       - run:
           name: install dependencies
           command: |
@@ -46,9 +20,10 @@ jobs:
           command: |
             npm run build
       - run :
-          name: create firebase rc
+          name: create firebase rc & install firebase
           command: |
-             echo "$(jq -n '{"projects": {"default": $ID}}' --arg ID ${FIREBASE_PROJECTS})" > .firebaserc
+             firebasercString='{"projects": {"defaults" : ${FIREBASE_PROJECTS}}}'
+             echo "$firebasercString" > .firebaserc
              npm install -g firebase-tools
       - run :
           name: deploy to firebase
