@@ -1,22 +1,17 @@
-version: 2.0
+version: 2.1
 jobs:
   build:
     docker:
-      - image: node:14.18.0-alpine
+      - image: cimg/base:2021.04
     steps:
       - checkout
-      - run: |
-          # build client
-          npm install && npm run build
-          # TODO: add options for dev and prod
-          # deploy client
-          npm install -g firebase-tools && firebase deploy --only hosting --token ${FIREBASE_TOKEN}
-workflows:
-  version: 2
-  build-and-deploy:
-    jobs:
-      - build:
-          filters:
-            branches:
-              only:
-                - master
+      - run:
+          name: The First Step
+          command: |
+            echo 'Hello World!'
+            echo 'This is the delivery pipeline'
+      - run:
+          name: The Second Step
+          command: |
+            ls -al
+            echo '^^^The files in your repo^^^'
