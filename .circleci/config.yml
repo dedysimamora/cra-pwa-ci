@@ -24,6 +24,7 @@ jobs:
           command: |
              firebasercString='{"projects": {"defaults" : ${FIREBASE_PROJECTS}}}'
              echo "$firebasercString" > .firebaserc
+             ls -a
              npm install -g firebase-tools
       - run :
           name: deploy to firebase
