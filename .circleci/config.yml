@@ -4,7 +4,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/base:2021.04
+      - image: node:14.18.0-alpine
     steps:
       - checkout
       - run:
@@ -27,4 +27,12 @@ jobs:
           name: deploy to firebase
           command: |
              firebase deploy --only hosting --token ${FIREBASE_TOKEN}
-             
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
