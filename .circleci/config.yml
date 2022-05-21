@@ -8,12 +8,23 @@ jobs:
     steps:
       - checkout
       - run:
-          name: The First Step
+          name: install dependencies
           command: |
-            echo 'Hello World!'
-            echo 'This is the delivery pipeline'
+            npm install
+      - run:
+          name: unit test
+          command: |
+            npm run test
+      - run:
+          name: build
+          command: |
+            npm run build
       - run :
           name: create firebase rc
           command: |
              echo "$(jq -n '{"projects": {"default": $ID}}' --arg ID ${FIREBASE_PROJECTS})" > .firebaserc
-             ls -al
+      - run :
+          name: deploy to firebase
+          command: |
+             firebase deploy --only hosting --token ${FIREBASE_TOKEN}
+             
