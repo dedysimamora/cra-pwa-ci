@@ -22,7 +22,7 @@ jobs:
       - run :
           name: create firebase rc & install firebase
           command: |
-             firebasercString='{"projects": {"defaults" : '${FIREBASE_PROJECTS}''}}'
+             firebasercString='{"projects": {"defaults" : '${FIREBASE_PROJECTS}'}}'
              echo "$firebasercString" > .firebaserc
              ls -a
              npm install -g firebase-tools
