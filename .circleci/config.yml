@@ -32,6 +32,7 @@ jobs:
       - image: node:14.18.0-alpine
     steps:
       - checkout
+      - jq/install
       - run:
           name: install dependencies
           command: |
